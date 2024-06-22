@@ -2,7 +2,7 @@
 
 ## Description
 
-**AI QA Test Buddy** is a tool designed to assist in generating test cases using AI. It leverages custom prompts to generate common test cases, helping quality assurance engineers streamline their testing processes. More features are coming soon to further enhance the capabilities of this tool.
+**AI QA Test Buddy** is a tool designed to assist in generating test cases using AI. It leverages custom prompts to generate common test cases, helping quality assurance engineers streamline their testing processes. More features are coming soon to further enhance the capabilities of this tool. I don't want this to just be a test case generator, it will contain more AI-QA related features. 
 
 I created this tool utilizing Google Gemini AI Modal - to help with testing, providing an AI bot that you can reach out to for assistance whenever needed.
 
