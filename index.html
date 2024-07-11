@@ -12,20 +12,24 @@
 <body>
     <!-- Chatbot Description -->
     <div class="section">
-        <h1>Explore My Advanced Test Case Generator </h1>
+        <h1>Explore My Advanced Test Case Generator</h1>
         <p>Integrated with Google Gemini AI modal</p>
-        <h2>Assists in crafting critical scenarios based on custom prompts </h2>
+        <h2>Assists in crafting critical scenarios based on custom prompts</h2>
         <p>Explore methods for crafting critical thinking test cases using AI guidance.</p>
     </div>
 
-    <!-- Button to generate test cases -->
+    <!-- List to generate test cases -->
     <div class="section">
         <h1>Create Test Cases with AI</h1>
-        <p>based on custom prompts</p>
+        <p> - Based on custom prompts</p>
+        <p> - Customize prompts in the .json file</p>
+        
+        <br>
+        <h1>Click on test cases below to generate test steps and expected results</h1>
         <div id="case-container">
-            <button id="create-tests-button" class="create-tests-button">
-                Generate Test Cases
-            </button>
+            <ul id="test-case-list" class="test-case-list">
+                <!-- Test cases will be dynamically populated here -->
+            </ul>
         </div>
     </div>
 

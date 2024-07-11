@@ -118,20 +118,24 @@ async function loadTestCases() {
   }
 }
 
-// Event handling for the button click
-const createTestButton = document.getElementById('create-tests-button');
+// Function to display test cases as clickable list items
+async function displayTestCases() {
+  const testCases = await loadTestCases();
+  const testCaseList = document.getElementById('test-case-list');
 
-createTestButton.addEventListener('click', async () => {
-  try {
-    const testCases = await loadTestCases();
-    const combinedTests = testCases.map(tc => `${tc.title}\n${tc.details}`).join('\n');
-    
-    console.log("create test cases:", combinedTests);
-    const aiResponse = await getResponse(`show me common test cases: ${combinedTests}`);
-    const chatArea = document.getElementById("chat-container");
-    const md_text = md().render(aiResponse);
-    chatArea.innerHTML += aiDiv(md_text);
-  } catch (error) {
-    console.error("Error getting AI response for test cases:", error);
-  }
-});
+  testCases.forEach((testCase, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = testCase.title;
+    listItem.classList.add('test-case-item');
+    listItem.addEventListener('click', async () => {
+      const aiResponse = await getResponse(`show me test cases: ${testCase.title}\n${testCase.details}`);
+      const chatArea = document.getElementById("chat-container");
+      const md_text = md().render(aiResponse);
+      chatArea.innerHTML += aiDiv(md_text);
+    });
+    testCaseList.appendChild(listItem);
+  });
+}
+
+// Load and display test cases when the page loads
+document.addEventListener("DOMContentLoaded", displayTestCases);
