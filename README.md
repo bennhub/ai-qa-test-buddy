@@ -7,6 +7,9 @@
 I created this tool utilizing Google Gemini AI Modal - to help with testing, providing an AI bot that you can reach out to for assistance whenever needed.
 
 
+![](https://github.com/bennhub/ai-qa-test-buddy/blob/main/ai_bot_testcase_2.gif%20)
+
+
 ## Features
 
 - Generate common test cases using custom prompts
