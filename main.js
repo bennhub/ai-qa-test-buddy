@@ -32,13 +32,16 @@ export const userDiv = (data) => {
   `;
 };
 
-// AI chat div
+// AI chat div with copy button inside the response div
 export const aiDiv = (data) => {
   return `
   <!-- AI Chat -->
   <div class="flex gap-2 justify-end m-2">
-    <div class="bg-gemDeep text-black p-1 rounded-md shadow-md mx-2">${data}</div>
-    <img src="bot.png" alt="bot icon" class="w-10 h-10 rounded-full"/>
+    <div class="bg-gemDeep text-black p-1 rounded-md shadow-md mx-2 relative">
+      <button class="copy-btn absolute top-0 right-0 bg-blue-500 text-white p-1 rounded-md shadow-md mx-2">Copy</button>
+      ${data}
+    </div>
+    <!-- <img src="bot.png" alt="bot icon" class="w-10 h-10 rounded-full"/> -->
   </div>
   `;
 };
@@ -57,7 +60,8 @@ async function handleSubmit(event) {
   console.log("User message:", userPrompt);
 
   // Display user message in chat
-  chatArea.innerHTML += userDiv(md().render(userPrompt));
+  const userContent = userDiv(md().render(userPrompt));
+  chatArea.innerHTML += userContent;
   userMessage.value = "";
 
   try {
@@ -66,11 +70,19 @@ async function handleSubmit(event) {
     const md_text = md().render(aiResponse);
     
     // Display AI response in chat
-    chatArea.innerHTML += aiDiv(md_text);
+    const aiContent = aiDiv(md_text);
+    chatArea.innerHTML += aiContent;
+
+    // Scroll to the start of the new AI content
+    const newMessage = chatArea.lastElementChild;
+    newMessage.scrollIntoView({ behavior: "smooth", block: "start" });
 
     // Store message history
     history.push({ role: "user", parts: userPrompt });
     history.push({ role: "model", parts: aiResponse });
+
+    // Add copy functionality
+    addCopyFunctionality();
 
     console.log("History:", history);
   } catch (error) {
@@ -131,7 +143,17 @@ async function displayTestCases() {
       const aiResponse = await getResponse(`show me test cases: ${testCase.title}\n${testCase.details}`);
       const chatArea = document.getElementById("chat-container");
       const md_text = md().render(aiResponse);
-      chatArea.innerHTML += aiDiv(md_text);
+      const aiContent = aiDiv(md_text);
+
+      // Display AI response in chat
+      chatArea.innerHTML += aiContent;
+
+      // Scroll to the start of the new AI content
+      const newMessage = chatArea.lastElementChild;
+      newMessage.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // Add copy functionality
+      addCopyFunctionality();
     });
     testCaseList.appendChild(listItem);
   });
@@ -139,3 +161,18 @@ async function displayTestCases() {
 
 // Load and display test cases when the page loads
 document.addEventListener("DOMContentLoaded", displayTestCases);
+
+// Function to add copy functionality to all copy buttons
+function addCopyFunctionality() {
+  const copyBtns = document.querySelectorAll('.copy-btn');
+  copyBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const content = btn.parentElement.innerText; // Corrected to innerText to exclude button text
+      navigator.clipboard.writeText(content).then(() => {
+        console.log("Copied to clipboard: ", content);
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+      });
+    });
+  });
+}
